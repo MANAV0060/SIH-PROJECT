@@ -172,13 +172,469 @@ button,input{font:inherit;color:inherit}
 .sec-head.center .copy{margin:22px auto 0}
 .bg-night .copy{color:rgba(242,240,236,.68)}
 
-/* Dedicated 3D Model Stage */
-.stage-3d-box{position:relative;margin-top:clamp(40px,5vw,64px);border-radius:28px;overflow:hidden;background:#f8fafc;border:1px solid var(--line);box-shadow:0 24px 60px -20px rgba(0,0,0,.1)}
-.stage-3d-frame{position:relative;width:100%;aspect-ratio:16/9;min-height:480px;overflow:hidden}
-.stage-3d-frame iframe{position:absolute;left:-30px;top:-52px;width:calc(100% + 60px);height:calc(100% + 104px);border:0;display:block}
-.stage-3d-tag{position:absolute;top:16px;left:16px;z-index:10;display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border:1px solid var(--line);font-size:11px;font-family:var(--mono);color:var(--ink);font-weight:600}
-.stage-3d-tag span.dot{width:6px;height:6px;border-radius:50%;background:#10b981;box-shadow:0 0 6px #10b981}
-.stage-3d-orbit{position:absolute;top:16px;right:16px;z-index:10;display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border:1px solid var(--line);font-size:11px;font-family:var(--mono);color:var(--ink);font-weight:600}
+/* ========================================================================= */
+/* DEDICATED 3D MULTI-ENVIRONMENT STAGE                                      */
+/* ========================================================================= */
+.stage-env-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: clamp(28px, 4vw, 48px);
+  padding: 8px 14px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}
+.stage-env-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.stage-env-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  padding-left: 8px;
+  letter-spacing: 0.08em;
+}
+.env-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: #94a3b8;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.env-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.env-toggle-btn.active {
+  background: #F26522;
+  color: #fff;
+  border-color: #F26522;
+  box-shadow: 0 0 16px rgba(242, 101, 34, 0.4);
+}
+.env-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e2e8f0;
+  font-size: 12px;
+  font-family: var(--mono);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.env-action-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+.hotspot-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+/* Stage Box */
+.stage-3d-box {
+  position: relative;
+  margin-top: 18px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #090e17;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.stage-3d-frame {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  aspect-ratio: 16/9;
+  min-height: 480px;
+  overflow: hidden;
+}
+.stage-3d-frame iframe {
+  position: absolute;
+  left: -30px;
+  top: -52px;
+  width: calc(100% + 60px);
+  height: calc(100% + 104px);
+  border: 0;
+  display: block;
+}
+
+/* Environment Layers */
+.stage-env-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  transition: opacity 0.5s ease;
+}
+
+/* Hangar Environment */
+.hangar-layer {
+  background: 
+    radial-gradient(ellipse 70% 55% at 50% 20%, rgba(242, 101, 34, 0.15), transparent 75%),
+    radial-gradient(circle at 50% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 60%),
+    linear-gradient(180deg, #070c16 0%, #0e1726 50%, #080d16 100%);
+}
+.hangar-beams {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 25%;
+  background: 
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0px, rgba(255, 255, 255, 0.04) 2px, transparent 2px, transparent 80px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, transparent 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.hangar-spotlight {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 60%;
+  height: 100%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.03) 45%, transparent 70%);
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.hangar-floor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 52%;
+  background: 
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 100px),
+    linear-gradient(180deg, transparent 0%, rgba(7, 12, 22, 0.85) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+.hangar-runway-markings {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.4);
+  white-space: nowrap;
+}
+.hangar-hazard {
+  height: 6px;
+  width: 80px;
+  background: repeating-linear-gradient(-45deg, #f59e0b 0, #f59e0b 8px, #111 8px, #111 16px);
+  border-radius: 3px;
+  opacity: 0.7;
+}
+
+/* Runway Environment */
+.runway-layer {
+  background: 
+    radial-gradient(ellipse 80% 40% at 50% 45%, rgba(242, 101, 34, 0.22), transparent 75%),
+    linear-gradient(180deg, #0b111e 0%, #1a253a 44%, #07090f 45%, #030407 100%);
+}
+.runway-sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44%;
+  background: linear-gradient(180deg, #070a12 0%, #1a263d 70%, rgba(242, 101, 34, 0.2) 100%);
+}
+.runway-mountains {
+  position: absolute;
+  top: 32%;
+  left: 0;
+  right: 0;
+  height: 12%;
+  background: 
+    radial-gradient(ellipse at 25% 100%, #101624 0%, #0d121c 60%, transparent 100%),
+    radial-gradient(ellipse at 75% 100%, #141c2c 0%, #0a0e17 65%, transparent 100%);
+  opacity: 0.9;
+}
+.runway-horizon-glow {
+  position: absolute;
+  top: 44%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(242, 101, 34, 0.8), transparent);
+  box-shadow: 0 0 20px rgba(242, 101, 34, 0.6);
+}
+.runway-tarmac {
+  position: absolute;
+  top: 45%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, #070a10 0%, #030508 100%);
+}
+.runway-center-stripes {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 6px;
+  transform: translateX(-50%);
+  background: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0, rgba(255, 255, 255, 0.6) 28px, transparent 28px, transparent 56px);
+  opacity: 0.5;
+}
+.runway-beacons {
+  position: absolute;
+  top: 8%;
+  left: 10%;
+  right: 10%;
+  display: flex;
+  justify-content: space-between;
+}
+.beacon {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  animation: pulseBeacon 2s infinite ease-in-out;
+}
+.beacon-green {
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981, 0 0 20px #10b981;
+}
+.beacon-amber {
+  background: #f59e0b;
+  box-shadow: 0 0 10px #f59e0b, 0 0 20px #f59e0b;
+}
+.runway-marking {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.45);
+  white-space: nowrap;
+}
+
+/* Cyber Environment */
+.env-cyber {
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.16), transparent 70%),
+    linear-gradient(180deg, #030712 0%, #060e1d 100%);
+}
+.cyber-grid-plane {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(14, 165, 233, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(circle at 50% 50%, black 35%, transparent 85%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, black 35%, transparent 85%);
+}
+.cyber-radar-rings {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(560px, 80vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border: 1px dashed rgba(14, 165, 233, 0.25);
+  border-radius: 50%;
+  animation: radarRotate 25s linear infinite;
+}
+.cyber-radar-rings::before {
+  content: '';
+  position: absolute;
+  inset: 22%;
+  border: 1px solid rgba(14, 165, 233, 0.18);
+  border-radius: 50%;
+}
+.cyber-scanner-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
+  box-shadow: 0 0 16px #0ea5e9;
+  animation: cyberScan 4.5s ease-in-out infinite;
+}
+.cyber-status-readout {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: #38bdf8;
+  white-space: nowrap;
+}
+
+/* Hotspots */
+.stage-hotspots-container {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.stage-hotspots-container.hidden-pins {
+  opacity: 0;
+  pointer-events: none;
+}
+.hotspot-pin {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+}
+.pin-marker {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25), 0 0 12px #10b981;
+  animation: pulsePin 2s infinite;
+  transition: transform 0.3s;
+}
+.pin-marker.hot {
+  background: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.25), 0 0 12px #f97316;
+}
+.hotspot-pin:hover .pin-marker {
+  transform: scale(1.35);
+}
+.pin-card {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 15, 26, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 8px 12px;
+  min-width: 180px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  opacity: 0.92;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.pin-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+.pin-status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #10b981;
+}
+.pin-status-dot.hot {
+  background: #f97316;
+}
+.pin-card p {
+  margin: 3px 0 0;
+  font-size: 11px;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+@keyframes pulseBeacon {
+  0%, 100% { opacity: 0.5; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+@keyframes pulsePin {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+@keyframes radarRotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes cyberScan {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(520px); opacity: 0; }
+}
+
+/* Stage Tags */
+.stage-3d-tag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 11px;
+  font-family: var(--mono);
+  color: #fff;
+  font-weight: 600;
+}
+.stage-3d-tag span.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+.stage-3d-orbit {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 11px;
+  font-family: var(--mono);
+  color: #fff;
+  font-weight: 600;
+}
 
 /* Capabilities Grid */
 .cap-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(40px,7vw,120px);align-items:start;margin-top:clamp(56px,7vw,96px)}
@@ -702,30 +1158,153 @@ html:not(.motion) .q-row{overflow-x:auto}
   </div>
 </section>
 
-<!-- DEDICATED 3D STAGE SECTION -->
-<section class="sec bg-white" id="3d-stage">
+<!-- DEDICATED 3D MULTI-ENVIRONMENT STAGE SECTION -->
+<section class="sec bg-[#080d16] text-white" id="3d-stage">
   <div class="wrap">
     <div class="sec-head center">
-      <h2 class="h2" data-split>Tactical airframe 3D digital asset.</h2>
-      <p class="copy" data-reveal>Fully interactive 3D model of the MALE UAV Elang Hitam airframe with synchronized telemetry sensor junctions. Drag to rotate 360°, scroll to zoom.</p>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F26522]/15 border border-[#F26522]/30 text-[#F26522] text-xs font-mono mb-4">
+        <span>3D IMMERSIVE DEFENSE STAGE</span>
+      </div>
+      <h2 class="h2 text-white" data-split>Tactical airframe 3D digital asset.</h2>
+      <p class="copy text-gray-400" data-reveal>Explore the MALE UAV Elang Hitam in realistic mission environments. Toggle between tactical hangar bay, mountain runway tarmac, and cybernetic telemetry HUD. Drag to orbit 360°, scroll to zoom.</p>
     </div>
 
-    <div class="stage-3d-box" data-reveal>
+    <!-- 3D Environment Control Switcher -->
+    <div class="stage-env-toolbar" data-reveal>
+      <div class="stage-env-group">
+        <span class="stage-env-label">ENVIRONMENT:</span>
+        <button type="button" class="env-toggle-btn active" data-env="hangar" onclick="set3DEnvironment('hangar')">
+          <span>🏢 Tactical Hangar</span>
+        </button>
+        <button type="button" class="env-toggle-btn" data-env="runway" onclick="set3DEnvironment('runway')">
+          <span>🛫 Mountain Runway</span>
+        </button>
+        <button type="button" class="env-toggle-btn" data-env="cyber" onclick="set3DEnvironment('cyber')">
+          <span>🌐 Cybernetic HUD</span>
+        </button>
+      </div>
+
+      <div class="stage-env-group">
+        <button type="button" class="env-action-btn" id="hotspotsToggle" onclick="toggleHotspots()">
+          <span class="hotspot-dot"></span>
+          <span>Subsystem Pins: ON</span>
+        </button>
+        <button type="button" class="env-action-btn" id="lightingToggle" onclick="toggleLighting()">
+          <span>💡 Spotlights</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="stage-3d-box env-hangar" id="stage3dBox" data-reveal>
+      <!-- Environment Layers -->
+      <div class="stage-env-layer hangar-layer">
+        <div class="hangar-beams"></div>
+        <div class="hangar-spotlight"></div>
+        <div class="hangar-floor"></div>
+        <div class="hangar-runway-markings">
+          <div class="hangar-hazard"></div>
+          <span>BAY 04 // TACTICAL AIRFRAME INSPECTION // FLIGHT READY</span>
+          <div class="hangar-hazard"></div>
+        </div>
+      </div>
+
+      <div class="stage-env-layer runway-layer" style="display: none;">
+        <div class="runway-sky"></div>
+        <div class="runway-mountains"></div>
+        <div class="runway-horizon-glow"></div>
+        <div class="runway-tarmac">
+          <div class="runway-center-stripes"></div>
+          <div class="runway-beacons">
+            <span class="beacon beacon-green"></span>
+            <span class="beacon beacon-green"></span>
+            <span class="beacon beacon-amber"></span>
+            <span class="beacon beacon-amber"></span>
+          </div>
+        </div>
+        <div class="runway-marking">
+          <span>RWY 09L · ELEV 1,420M · QNH 1013 HPA · FL195 SORTIE READY</span>
+        </div>
+      </div>
+
+      <div class="stage-env-layer cyber-layer" style="display: none;">
+        <div class="cyber-grid-plane"></div>
+        <div class="cyber-radar-rings"></div>
+        <div class="cyber-scanner-line"></div>
+        <div class="cyber-status-readout">
+          <span>LAT 34°22'N · LON 77°35'E · HEADING 084° · MACH 0.38</span>
+        </div>
+      </div>
+
+      <!-- Telemetry Subsystem Pins Overlay -->
+      <div class="stage-hotspots-container" id="hotspotsContainer">
+        <!-- Pin 1: Nose EO/IR Gimbal -->
+        <div class="hotspot-pin pin-nose" style="top: 56%; left: 33%;">
+          <div class="pin-marker"></div>
+          <div class="pin-card">
+            <div class="pin-header">
+              <span class="pin-status-dot"></span>
+              <strong>EO/IR FLIR GIMBAL</strong>
+            </div>
+            <p>4K Multi-Spectral Target Tracking</p>
+          </div>
+        </div>
+
+        <!-- Pin 2: Engine Nacelle -->
+        <div class="hotspot-pin pin-engine" style="top: 38%; left: 68%;">
+          <div class="pin-marker hot"></div>
+          <div class="pin-card">
+            <div class="pin-header">
+              <span class="pin-status-dot hot"></span>
+              <strong>ROTAX 915 iS TURBO</strong>
+            </div>
+            <p>141 HP · PINN Surrogate Active</p>
+          </div>
+        </div>
+
+        <!-- Pin 3: Pusher Propeller -->
+        <div class="hotspot-pin pin-prop" style="top: 48%; left: 74%;">
+          <div class="pin-marker"></div>
+          <div class="pin-card">
+            <div class="pin-header">
+              <span class="pin-status-dot"></span>
+              <strong>HYDRAULIC GOVERNOR</strong>
+            </div>
+            <p>3-Blade Constant Speed Prop</p>
+          </div>
+        </div>
+
+        <!-- Pin 4: Wing Fuel Cell -->
+        <div class="hotspot-pin pin-wing" style="top: 58%; left: 63%;">
+          <div class="pin-marker"></div>
+          <div class="pin-card">
+            <div class="pin-header">
+              <span class="pin-status-dot"></span>
+              <strong>WING FUEL PODS</strong>
+            </div>
+            <p>280L AVGAS 100LL Balanced</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Badge Overlays -->
       <div class="stage-3d-tag">
         <span class="dot"></span>
-        <span>AERIS-TWIN 3D MISSION ASSET</span>
+        <span id="envBadgeTitle">AERIS-TWIN · HANGAR BAY 04</span>
       </div>
       <div class="stage-3d-orbit">
         <span>360° LIVE ORBIT</span>
       </div>
+
+      <!-- 3D Drone Iframe -->
       <div class="stage-3d-frame">
         <iframe
+          id="uavSketchfabIframe"
           title="UAV Elang Hitam Tactical MALE Airframe"
           allowfullscreen="true"
           mozallowfullscreen="true"
           webkitallowfullscreen="true"
           allow="autoplay; fullscreen; xr-spatial-tracking"
-          src="https://sketchfab.com/models/51ea139d20a248398d42a9404f197516/embed?autostart=1&camera=0&preload=0&ui_theme=dark&ui_controls=0&ui_watermark=0&ui_infos=0&ui_stop=0"
+          src="https://sketchfab.com/models/51ea139d20a248398d42a9404f197516/embed?autostart=1&camera=0&preload=0&transparent=1&ui_theme=dark&ui_controls=0&ui_watermark=0&ui_infos=0&ui_stop=0"
         ></iframe>
       </div>
     </div>
@@ -1597,6 +2176,49 @@ html:not(.motion) .q-row{overflow-x:auto}
 
   addEventListener('load',()=>ScrollTrigger.refresh());
 })();
+
+// 3D Multi-Environment Controls
+window.set3DEnvironment = function(env) {
+  const box = document.getElementById('stage3dBox');
+  const badge = document.getElementById('envBadgeTitle');
+  if (!box) return;
+
+  // Toggle active class on buttons
+  document.querySelectorAll('.env-toggle-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.env === env);
+  });
+
+  // Switch layers
+  const hangar = document.querySelector('.hangar-layer');
+  const runway = document.querySelector('.runway-layer');
+  const cyber = document.querySelector('.cyber-layer');
+
+  if (hangar) hangar.style.display = env === 'hangar' ? 'block' : 'none';
+  if (runway) runway.style.display = env === 'runway' ? 'block' : 'none';
+  if (cyber) cyber.style.display = env === 'cyber' ? 'block' : 'none';
+
+  box.className = 'stage-3d-box env-' + env;
+  if (badge) {
+    if (env === 'hangar') badge.textContent = 'AERIS-TWIN · HANGAR BAY 04';
+    if (env === 'runway') badge.textContent = 'AERIS-TWIN · TACTICAL RUNWAY 09L';
+    if (env === 'cyber') badge.textContent = 'AERIS-TWIN · CYBER TELEMETRY HUD';
+  }
+};
+
+window.toggleHotspots = function() {
+  const c = document.getElementById('hotspotsContainer');
+  const btn = document.getElementById('hotspotsToggle');
+  if (!c || !btn) return;
+  const isHidden = c.classList.toggle('hidden-pins');
+  btn.querySelector('span:last-child').textContent = isHidden ? 'Subsystem Pins: OFF' : 'Subsystem Pins: ON';
+};
+
+window.toggleLighting = function() {
+  const s = document.querySelector('.hangar-spotlight');
+  if (s) {
+    s.style.opacity = s.style.opacity === '0' ? '1' : '0';
+  }
+};
 </script>
 </body>
 </html>
