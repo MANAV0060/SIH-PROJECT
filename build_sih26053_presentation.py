@@ -66,15 +66,15 @@ def create_sih26053_deck():
         tf.margin_bottom = Inches(0.0)
         p = tf.paragraphs[0]
         p.text = title_text
-        p.font.size = Pt(19)
+        p.font.size = Pt(21)
         p.font.bold = True
         p.font.color.rgb = C_WHITE
         p.alignment = PP_ALIGN.LEFT
 
         if os.path.exists('assets/sih_header_logo.png'):
             slide.shapes.add_picture('assets/sih_header_logo.png', Inches(10.7), Inches(0.12), width=Inches(2.1))
-        elif os.path.exists('assets/sih_bulb_hd.png'):
-            slide.shapes.add_picture('assets/sih_bulb_hd.png', Inches(11.8), Inches(0.15), width=Inches(0.9))
+        elif os.path.exists('assets/sih_bulb_hd_clean.png'):
+            slide.shapes.add_picture('assets/sih_bulb_hd_clean.png', Inches(11.8), Inches(0.15), width=Inches(0.9))
 
     # =========================================================================
     # SLIDE 1: TITLE SLIDE (Official SIH 2026 Layout)
@@ -83,46 +83,46 @@ def create_sih26053_deck():
 
     # Top Header Logos
     if os.path.exists('assets/sih_header_logo.png'):
-        s1.shapes.add_picture('assets/sih_header_logo.png', Inches(10.5), Inches(0.20), width=Inches(2.3))
+        s1.shapes.add_picture('assets/sih_header_logo.png', Inches(10.5), Inches(0.18), width=Inches(2.4))
 
     # Team Name / Logo Left
-    tx_team = s1.shapes.add_textbox(Inches(0.8), Inches(0.35), Inches(3.0), Inches(0.5))
+    tx_team = s1.shapes.add_textbox(Inches(0.8), Inches(0.30), Inches(3.0), Inches(0.55))
     tf_team = tx_team.text_frame
     p_team = tf_team.paragraphs[0]
     p_team.text = "Team Mindsmiths"
-    p_team.font.size = Pt(18)
+    p_team.font.size = Pt(20)
     p_team.font.bold = True
     p_team.font.color.rgb = C_NAVY_BANNER
 
     # Header Title Center
-    tx_head = s1.shapes.add_textbox(Inches(3.5), Inches(0.30), Inches(6.5), Inches(0.6))
+    tx_head = s1.shapes.add_textbox(Inches(3.3), Inches(0.28), Inches(6.9), Inches(0.65))
     tf_head = tx_head.text_frame
     p_head = tf_head.paragraphs[0]
     p_head.text = "SMART INDIA HACKATHON 2026"
-    p_head.font.size = Pt(22)
+    p_head.font.size = Pt(24)
     p_head.font.bold = True
     p_head.font.color.rgb = C_NAVY_BANNER
     p_head.alignment = PP_ALIGN.CENTER
 
     # Horizontal Divider Line
-    line1 = s1.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.8), Inches(1.15), Inches(11.733), Inches(0.02))
+    line1 = s1.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.8), Inches(1.10), Inches(11.733), Inches(0.02))
     line1.fill.solid()
     line1.fill.fore_color.rgb = RGBColor(148, 163, 184)
     line1.line.fill.background()
 
     # Project Title
-    tx_proj = s1.shapes.add_textbox(Inches(0.8), Inches(1.35), Inches(11.733), Inches(1.0))
+    tx_proj = s1.shapes.add_textbox(Inches(0.8), Inches(1.25), Inches(11.733), Inches(1.05))
     tf_proj = tx_proj.text_frame
     tf_proj.word_wrap = True
     p_proj = tf_proj.paragraphs[0]
     p_proj.text = "Adaptive Variable Resolution 2.5D Lidar Mapping for Dynamic Environment Perception"
-    p_proj.font.size = Pt(25)
+    p_proj.font.size = Pt(27)
     p_proj.font.bold = True
     p_proj.font.color.rgb = C_BOLD_BLACK
     p_proj.alignment = PP_ALIGN.CENTER
 
     # Left Column: Metadata Details (Exact SIH Template Layout)
-    tx_meta = s1.shapes.add_textbox(Inches(0.8), Inches(2.5), Inches(7.8), Inches(4.3))
+    tx_meta = s1.shapes.add_textbox(Inches(0.8), Inches(2.45), Inches(8.0), Inches(4.5))
     tf_meta = tx_meta.text_frame
     tf_meta.word_wrap = True
     tf_meta.margin_left = tf_meta.margin_top = tf_meta.margin_right = tf_meta.margin_bottom = 0
@@ -139,23 +139,23 @@ def create_sih26053_deck():
 
     for idx, (label, val) in enumerate(items):
         p = tf_meta.paragraphs[0] if idx == 0 else tf_meta.add_paragraph()
-        p.space_after = Pt(10)
+        p.space_after = Pt(11)
         run_l = p.add_run()
         run_l.text = f"• {label} "
         run_l.font.bold = True
-        run_l.font.size = Pt(13.5)
+        run_l.font.size = Pt(15.5)
         run_l.font.color.rgb = C_BOLD_BLACK
 
         run_v = p.add_run()
         run_v.text = val
         run_v.font.bold = False
-        run_v.font.size = Pt(13.5)
+        run_v.font.size = Pt(15.5)
         run_v.font.color.rgb = C_NAVY_BANNER if "SIH26053" in val or "Mindsmiths" in val or "DRDO" in val else C_BOLD_BLACK
 
     # Right Side Graphic (Official SIH Bulb Logo)
     bulb_img = 'assets/sih_bulb_hd_clean.png' if os.path.exists('assets/sih_bulb_hd_clean.png') else 'sih_bulb_hd.png'
     if os.path.exists(bulb_img):
-        s1.shapes.add_picture(bulb_img, Inches(8.9), Inches(2.2), width=Inches(3.6))
+        s1.shapes.add_picture(bulb_img, Inches(9.0), Inches(2.3), width=Inches(3.7))
 
     add_footer(s1, 1)
 
@@ -166,9 +166,9 @@ def create_sih26053_deck():
     add_banner_header(s2, "PROPOSED SOLUTION")
 
     # Column 1: Problem at Hand (4 colored cards)
-    tx_p = s2.shapes.add_textbox(Inches(0.6), Inches(0.92), Inches(3.6), Inches(0.35))
+    tx_p = s2.shapes.add_textbox(Inches(0.6), Inches(0.90), Inches(3.6), Inches(0.35))
     tx_p.text_frame.paragraphs[0].text = "Problem at Hand"
-    tx_p.text_frame.paragraphs[0].font.size = Pt(16)
+    tx_p.text_frame.paragraphs[0].font.size = Pt(18)
     tx_p.text_frame.paragraphs[0].font.bold = True
     tx_p.text_frame.paragraphs[0].font.color.rgb = RGBColor(194, 65, 12)
 
@@ -194,28 +194,28 @@ def create_sih26053_deck():
         r1 = p1.add_run()
         r1.text = title + " "
         r1.font.bold = True
-        r1.font.size = Pt(10.5)
+        r1.font.size = Pt(12)
         r1.font.color.rgb = C_BOLD_BLACK
 
         r2 = p1.add_run()
         r2.text = desc
-        r2.font.size = Pt(10)
+        r2.font.size = Pt(11)
         r2.font.color.rgb = C_BOLD_BLACK
         y_pos += 1.40
 
     # Column 2: Our Solution (Center Visual & Why We Stand Out)
-    tx_s = s2.shapes.add_textbox(Inches(4.4), Inches(0.92), Inches(5.1), Inches(0.35))
+    tx_s = s2.shapes.add_textbox(Inches(4.4), Inches(0.90), Inches(5.1), Inches(0.35))
     tx_s.text_frame.paragraphs[0].text = "Our Solution: FOVEA-MAP 2.5D Engine"
-    tx_s.text_frame.paragraphs[0].font.size = Pt(16)
+    tx_s.text_frame.paragraphs[0].font.size = Pt(18)
     tx_s.text_frame.paragraphs[0].font.bold = True
     tx_s.text_frame.paragraphs[0].font.color.rgb = RGBColor(16, 120, 70)
 
     # Center Visual
     if os.path.exists('assets/lidar_slide2_foveated_grid.png'):
-        s2.shapes.add_picture('assets/lidar_slide2_foveated_grid.png', Inches(4.4), Inches(1.30), width=Inches(5.1), height=Inches(3.4))
+        s2.shapes.add_picture('assets/lidar_slide2_foveated_grid.png', Inches(4.4), Inches(1.30), width=Inches(5.1), height=Inches(3.35))
 
     # Why We Stand Out Card
-    standout = s2.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(4.4), Inches(4.85), Inches(5.1), Inches(2.0))
+    standout = s2.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(4.4), Inches(4.80), Inches(5.1), Inches(2.05))
     standout.fill.solid()
     standout.fill.fore_color.rgb = RGBColor(254, 237, 213)
     standout.line.color.rgb = RGBColor(249, 115, 22)
@@ -223,11 +223,11 @@ def create_sih26053_deck():
 
     tf_st = standout.text_frame
     tf_st.word_wrap = True
-    tf_st.margin_left = tf_st.margin_right = tf_st.margin_top = tf_st.margin_bottom = Inches(0.15)
+    tf_st.margin_left = tf_st.margin_right = tf_st.margin_top = tf_st.margin_bottom = Inches(0.14)
     p_st_h = tf_st.paragraphs[0]
     p_st_h.text = "Why We Stand Out"
     p_st_h.font.bold = True
-    p_st_h.font.size = Pt(12)
+    p_st_h.font.size = Pt(14)
     p_st_h.font.color.rgb = RGBColor(194, 65, 12)
     p_st_h.space_after = Pt(4)
 
@@ -239,14 +239,14 @@ def create_sih26053_deck():
     for pt_text in standout_points:
         p = tf_st.add_paragraph()
         p.text = pt_text
-        p.font.size = Pt(9.5)
+        p.font.size = Pt(11)
         p.font.color.rgb = C_BOLD_BLACK
         p.space_after = Pt(2)
 
     # Column 3: Key Features Right
-    tx_k = s2.shapes.add_textbox(Inches(9.7), Inches(0.92), Inches(3.0), Inches(0.35))
+    tx_k = s2.shapes.add_textbox(Inches(9.7), Inches(0.90), Inches(3.0), Inches(0.35))
     tx_k.text_frame.paragraphs[0].text = "Key Features"
-    tx_k.text_frame.paragraphs[0].font.size = Pt(16)
+    tx_k.text_frame.paragraphs[0].font.size = Pt(18)
     tx_k.text_frame.paragraphs[0].font.bold = True
     tx_k.text_frame.paragraphs[0].font.color.rgb = C_NAVY_BANNER
 
@@ -273,12 +273,12 @@ def create_sih26053_deck():
         p1 = tf.paragraphs[0]
         p1.text = "⚡ " + h_txt
         p1.font.bold = True
-        p1.font.size = Pt(10)
+        p1.font.size = Pt(11.5)
         p1.font.color.rgb = C_NAVY_BANNER
 
         p2 = tf.add_paragraph()
         p2.text = d_txt
-        p2.font.size = Pt(8.5)
+        p2.font.size = Pt(10)
         p2.font.color.rgb = C_BOLD_BLACK
         y_feat += 0.93
 
@@ -292,20 +292,20 @@ def create_sih26053_deck():
 
     # Center Architecture Diagram
     if os.path.exists('assets/lidar_slide3_architecture.png'):
-        s3.shapes.add_picture('assets/lidar_slide3_architecture.png', Inches(0.8), Inches(1.0), width=Inches(11.7), height=Inches(3.8))
+        s3.shapes.add_picture('assets/lidar_slide3_architecture.png', Inches(0.8), Inches(0.95), width=Inches(11.7), height=Inches(3.85))
 
     # Bottom Pipeline Breakdown Cards
     steps = [
-        ("1. Input & Grounding", "Raw 128-beam 3D LiDAR point cloud @ 20Hz. Patchwork++ cylindrical RANSAC isolates ground plane from obstacle inliers in 3.4ms.", RGBColor(15, 23, 42)),
-        ("2. Foveated Tessellation", "Concentric distance-dependent binning: Zone A (5cm, 0-10m), Zone B (20cm, 10-35m), Zone C (50cm, 35-100m). Slashes memory by >85%.", RGBColor(0, 91, 148)),
-        ("3. 2.5D Elevation Tensor", "Computes Z_max, Z_min, roughness σ_z², and normal vector n per cell. Directly calculates slope angle and step-climbing traversability.", RGBColor(2, 132, 199)),
-        ("4. Deep Semantic Inference", "Sparse Polar CNN running TensorRT INT8 quantization. Predicts traversability masks and dynamic obstacles in 14.2ms (<15W SWaP).", RGBColor(124, 58, 237)),
-        ("5. Bayesian Tracking & ROS2", "Recursive log-odds evidence update + Kalman filter velocity estimation purges moving ghost trails. Publishes standard /costmap_2d.", RGBColor(5, 150, 105))
+        ("1. Input & Grounding", "Raw 128-beam 3D LiDAR point cloud @ 20Hz. Patchwork++ cylindrical RANSAC isolates ground plane in 3.4ms.", RGBColor(15, 23, 42)),
+        ("2. Foveated Tessellation", "Concentric distance binning: Zone A (5cm, 0-10m), Zone B (20cm, 10-35m), Zone C (50cm). >85% RAM saved.", RGBColor(0, 91, 148)),
+        ("3. 2.5D Elevation Tensor", "Stores Z_max, Z_min, roughness σ_z², and normal vector n. Directly determines slope angle and obstacle height.", RGBColor(2, 132, 199)),
+        ("4. Deep Semantic Inference", "Sparse Polar CNN with TensorRT INT8 quantization. Predicts dynamic obstacles and terrain masks in 14.2ms (<15W SWaP).", RGBColor(124, 58, 237)),
+        ("5. Bayesian Tracking & ROS2", "Recursive log-odds evidence update + Kalman filter velocity estimation purges ghost trails. Publishes /costmap_2d.", RGBColor(5, 150, 105))
     ]
 
     x_step = 0.8
     for title, desc, col in steps:
-        box = s3.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x_step), Inches(5.05), Inches(2.22), Inches(1.80))
+        box = s3.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x_step), Inches(4.98), Inches(2.22), Inches(1.90))
         box.fill.solid()
         box.fill.fore_color.rgb = C_SUBTLE_BG
         box.line.color.rgb = col
@@ -317,13 +317,13 @@ def create_sih26053_deck():
         p1 = tf.paragraphs[0]
         p1.text = title
         p1.font.bold = True
-        p1.font.size = Pt(10)
+        p1.font.size = Pt(12)
         p1.font.color.rgb = col
-        p1.space_after = Pt(4)
+        p1.space_after = Pt(3)
 
         p2 = tf.add_paragraph()
         p2.text = desc
-        p2.font.size = Pt(8.5)
+        p2.font.size = Pt(10.5)
         p2.font.color.rgb = C_BOLD_BLACK
 
         x_step += 2.37
@@ -348,12 +348,12 @@ def create_sih26053_deck():
     p = tf1.paragraphs[0]
     p.text = "Technical Feasibility"
     p.font.bold = True
-    p.font.size = Pt(12)
+    p.font.size = Pt(14)
     p.font.color.rgb = RGBColor(194, 65, 12)
     p.space_after = Pt(4)
     p2 = tf1.add_paragraph()
-    p2.text = "• Commercially Proven Stack: Built with ROS2 Humble, CUDA 12, TensorRT INT8, and standard C++20.\n• Open Sensor Compatibility: Plug-and-play with Velodyne, Ouster, Hesai, and RoboSense 16/32/64/128-beam LiDARs.\n• Edge-Verified: Validated on NVIDIA Jetson Orin Nano (8GB) and AGX Xavier under 15W power constraints."
-    p2.font.size = Pt(9)
+    p2.text = "• Commercially Proven Stack: Built with ROS2 Humble, CUDA 12, TensorRT INT8, and standard C++20.\n• Open Sensor Compatibility: Plug-and-play with Velodyne, Ouster, Hesai, and RoboSense LiDARs.\n• Edge-Verified: Validated on NVIDIA Jetson Orin Nano (8GB) under 15W power constraints."
+    p2.font.size = Pt(10.5)
     p2.font.color.rgb = C_BOLD_BLACK
 
     b_of = s4.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(3.9), Inches(2.8), Inches(2.95))
@@ -367,19 +367,19 @@ def create_sih26053_deck():
     p = tf2.paragraphs[0]
     p.text = "Operational & Environmental"
     p.font.bold = True
-    p.font.size = Pt(12)
+    p.font.size = Pt(14)
     p.font.color.rgb = RGBColor(194, 65, 12)
     p.space_after = Pt(4)
     p2 = tf2.add_paragraph()
-    p2.text = "• All-Weather Tactical Readiness: Operates in total darkness, dense smoke, dust, and rain with zero optical light dependency.\n• GPS-Denied Autonomous Operation: Tightly coupled with wheel odometry and IMU for subterranean & dense urban missions.\n• Negative Obstacle Safety: Prevents chassis ditch rollovers and axle fractures."
-    p2.font.size = Pt(9)
+    p2.text = "• All-Weather Tactical Readiness: Operates in total darkness, dense smoke, dust, and rain with zero optical light dependency.\n• GPS-Denied Autonomous Operation: Tightly coupled with wheel odometry and IMU.\n• Negative Obstacle Safety: Prevents chassis ditch rollovers and axle fractures."
+    p2.font.size = Pt(10.5)
     p2.font.color.rgb = C_BOLD_BLACK
 
     # Center: Benchmark Comparison Table & Roadmap
     tx_t1 = s4.shapes.add_textbox(Inches(3.6), Inches(0.95), Inches(6.0), Inches(0.3))
     tx_t1.text_frame.paragraphs[0].text = "Benchmark Performance Comparison"
     tx_t1.text_frame.paragraphs[0].font.bold = True
-    tx_t1.text_frame.paragraphs[0].font.size = Pt(12)
+    tx_t1.text_frame.paragraphs[0].font.size = Pt(14)
     tx_t1.text_frame.paragraphs[0].font.color.rgb = C_NAVY_BANNER
 
     # Table 1: Performance
@@ -395,7 +395,7 @@ def create_sih26053_deck():
         cell = t1.cell(0, idx)
         cell.text = h
         cell.text_frame.paragraphs[0].font.bold = True
-        cell.text_frame.paragraphs[0].font.size = Pt(9)
+        cell.text_frame.paragraphs[0].font.size = Pt(10.5)
         cell.text_frame.paragraphs[0].font.color.rgb = C_WHITE
         cell.fill.solid()
         cell.fill.fore_color.rgb = C_NAVY_BANNER
@@ -412,7 +412,7 @@ def create_sih26053_deck():
             cell = t1.cell(r_idx + 1, c_idx)
             cell.text = val
             p = cell.text_frame.paragraphs[0]
-            p.font.size = Pt(8.5)
+            p.font.size = Pt(10)
             if c_idx == 3:
                 p.font.bold = True
                 p.font.color.rgb = RGBColor(16, 120, 70)
@@ -425,7 +425,7 @@ def create_sih26053_deck():
     tx_t2 = s4.shapes.add_textbox(Inches(3.6), Inches(3.90), Inches(6.0), Inches(0.3))
     tx_t2.text_frame.paragraphs[0].text = "Development & Implementation Roadmap"
     tx_t2.text_frame.paragraphs[0].font.bold = True
-    tx_t2.text_frame.paragraphs[0].font.size = Pt(12)
+    tx_t2.text_frame.paragraphs[0].font.size = Pt(14)
     tx_t2.text_frame.paragraphs[0].font.color.rgb = C_NAVY_BANNER
 
     t2 = s4.shapes.add_table(5, 3, Inches(3.6), Inches(4.25), Inches(6.0), Inches(2.6)).table
@@ -438,7 +438,7 @@ def create_sih26053_deck():
         cell = t2.cell(0, idx)
         cell.text = h
         cell.text_frame.paragraphs[0].font.bold = True
-        cell.text_frame.paragraphs[0].font.size = Pt(9)
+        cell.text_frame.paragraphs[0].font.size = Pt(10.5)
         cell.text_frame.paragraphs[0].font.color.rgb = C_WHITE
         cell.fill.solid()
         cell.fill.fore_color.rgb = C_NAVY_BANNER
@@ -454,7 +454,7 @@ def create_sih26053_deck():
             cell = t2.cell(r_idx + 1, c_idx)
             cell.text = val
             p = cell.text_frame.paragraphs[0]
-            p.font.size = Pt(8.5)
+            p.font.size = Pt(10)
             p.font.color.rgb = C_BOLD_BLACK
 
     # Right Column: Maintenance & Atmanirbhar Bharat
@@ -469,12 +469,12 @@ def create_sih26053_deck():
     p = tf3.paragraphs[0]
     p.text = "Safety & Maintainability"
     p.font.bold = True
-    p.font.size = Pt(12)
+    p.font.size = Pt(14)
     p.font.color.rgb = C_NAVY_BANNER
     p.space_after = Pt(4)
     p2 = tf3.add_paragraph()
     p2.text = "• Zero Memory Leaks: Deterministic memory allocation with zero dynamic heap allocations in inner loop.\n• Fault-Tolerant Watchdogs: Sensor dropout detection with graceful fallback to last valid occupancy tensor.\n• MISRA C++ Compliant: Production-grade embedded robotics safety."
-    p2.font.size = Pt(9)
+    p2.font.size = Pt(10.5)
     p2.font.color.rgb = C_BOLD_BLACK
 
     b_ab = s4.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(9.8), Inches(3.9), Inches(2.9), Inches(2.95))
@@ -488,12 +488,12 @@ def create_sih26053_deck():
     p = tf4.paragraphs[0]
     p.text = "Atmanirbhar Bharat Strategic"
     p.font.bold = True
-    p.font.size = Pt(12)
+    p.font.size = Pt(14)
     p.font.color.rgb = C_NAVY_BANNER
     p.space_after = Pt(4)
     p2 = tf4.add_paragraph()
-    p2.text = "• 100% Indigenous Software: Zero dependence on proprietary foreign perception engines (Velodyne, Hesai toolkits).\n• Slashes Hardware Import Costs: Achieves server-grade perception on low-cost $499 edge kits instead of $5,000 GPU rigs.\n• Direct DRDO Tactical Fit: Ready for DAKSH, WHEELED AGVs, and border rovers."
-    p2.font.size = Pt(9)
+    p2.text = "• 100% Indigenous Software: Zero dependence on proprietary foreign perception engines.\n• Slashes Hardware Import Costs: Achieves server-grade perception on low-cost $499 edge kits instead of $5,000 GPU rigs.\n• Direct DRDO Tactical Fit: Ready for DAKSH, WHEELED AGVs, and border rovers."
+    p2.font.size = Pt(10.5)
     p2.font.color.rgb = C_BOLD_BLACK
 
     add_footer(s4, 4)
@@ -505,18 +505,18 @@ def create_sih26053_deck():
     add_banner_header(s5, "IMPACT AND BENEFITS")
 
     # Center Wheel / Stakeholder Diagram
-    wheel = s5.shapes.add_shape(MSO_SHAPE.OVAL, Inches(2.4), Inches(2.0), Inches(2.6), Inches(2.6))
+    wheel = s5.shapes.add_shape(MSO_SHAPE.OVAL, Inches(2.35), Inches(1.95), Inches(2.7), Inches(2.7))
     wheel.fill.solid()
     wheel.fill.fore_color.rgb = RGBColor(249, 115, 22)
     wheel.line.color.rgb = RGBColor(194, 65, 12)
     wheel.line.width = Pt(2)
     tf_w = wheel.text_frame
     tf_w.word_wrap = True
-    tf_w.margin_left = tf_w.margin_right = tf_w.margin_top = tf_w.margin_bottom = Inches(0.2)
+    tf_w.margin_left = tf_w.margin_right = tf_w.margin_top = tf_w.margin_bottom = Inches(0.15)
     p_w = tf_w.paragraphs[0]
     p_w.text = "Potential Impact on Targeted Audience"
     p_w.font.bold = True
-    p_w.font.size = Pt(13)
+    p_w.font.size = Pt(15)
     p_w.font.color.rgb = C_WHITE
     p_w.alignment = PP_ALIGN.CENTER
 
@@ -541,13 +541,13 @@ def create_sih26053_deck():
         p1 = tf.paragraphs[0]
         p1.text = "🎯 " + title
         p1.font.bold = True
-        p1.font.size = Pt(10.5)
+        p1.font.size = Pt(12)
         p1.font.color.rgb = C_NAVY_BANNER
         p1.space_after = Pt(2)
 
         p2 = tf.add_paragraph()
         p2.text = desc
-        p2.font.size = Pt(8.5)
+        p2.font.size = Pt(10)
         p2.font.color.rgb = C_BOLD_BLACK
 
     # Right Side: 3 Key Strategic Benefit Cards
@@ -571,13 +571,13 @@ def create_sih26053_deck():
         p1 = tf.paragraphs[0]
         p1.text = "“ " + title
         p1.font.bold = True
-        p1.font.size = Pt(12)
+        p1.font.size = Pt(14)
         p1.font.color.rgb = col
         p1.space_after = Pt(3)
 
         p2 = tf.add_paragraph()
         p2.text = desc
-        p2.font.size = Pt(9.5)
+        p2.font.size = Pt(11)
         p2.font.color.rgb = C_BOLD_BLACK
 
         y_ben += 1.70
@@ -595,7 +595,7 @@ def create_sih26053_deck():
     p_q = tf_q.paragraphs[0]
     p_q.text = "“India's breakthrough foveated 2.5D LiDAR perception engine — delivering military-grade situational awareness with unprecedented edge efficiency.”"
     p_q.font.bold = True
-    p_q.font.size = Pt(11)
+    p_q.font.size = Pt(13)
     p_q.font.color.rgb = C_BOLD_BLACK
     p_q.alignment = PP_ALIGN.CENTER
 
@@ -632,19 +632,19 @@ def create_sih26053_deck():
         p1 = tf.paragraphs[0]
         p1.text = title
         p1.font.bold = True
-        p1.font.size = Pt(10.5)
+        p1.font.size = Pt(12)
         p1.font.color.rgb = C_NAVY_BANNER
         p1.space_after = Pt(4)
 
         p2 = tf.add_paragraph()
         p2.text = desc
-        p2.font.size = Pt(9)
+        p2.font.size = Pt(10.5)
         p2.font.color.rgb = C_BOLD_BLACK
 
         x_m += 2.8
 
     # Bottom Left: Academic & Industry References
-    ref_box = s6.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(3.60), Inches(7.4), Inches(3.2))
+    ref_box = s6.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(3.55), Inches(7.4), Inches(3.25))
     ref_box.fill.solid()
     ref_box.fill.fore_color.rgb = C_WHITE
     ref_box.line.color.rgb = C_CARD_BD
@@ -656,7 +656,7 @@ def create_sih26053_deck():
     p_rf_h = tf_ref.paragraphs[0]
     p_rf_h.text = "📚 Academic & Technical References"
     p_rf_h.font.bold = True
-    p_rf_h.font.size = Pt(12)
+    p_rf_h.font.size = Pt(14)
     p_rf_h.font.color.rgb = C_NAVY_BANNER
     p_rf_h.space_after = Pt(6)
 
@@ -669,12 +669,12 @@ def create_sih26053_deck():
     for r in refs:
         p = tf_ref.add_paragraph()
         p.text = r
-        p.font.size = Pt(8.5)
+        p.font.size = Pt(10)
         p.font.color.rgb = C_BOLD_BLACK
         p.space_after = Pt(3)
 
     # Bottom Right: Verification Links & Proof of Concept
-    link_box = s6.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(8.2), Inches(3.60), Inches(4.5), Inches(3.2))
+    link_box = s6.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(8.2), Inches(3.55), Inches(4.5), Inches(3.25))
     link_box.fill.solid()
     link_box.fill.fore_color.rgb = C_WHITE
     link_box.line.color.rgb = C_CARD_BD
@@ -686,7 +686,7 @@ def create_sih26053_deck():
     p_lh = tf_l.paragraphs[0]
     p_lh.text = "🔗 Project Deliverables & Demonstration Links"
     p_lh.font.bold = True
-    p_lh.font.size = Pt(12)
+    p_lh.font.size = Pt(13)
     p_lh.font.color.rgb = C_NAVY_BANNER
     p_lh.space_after = Pt(6)
 
@@ -701,9 +701,9 @@ def create_sih26053_deck():
     for l_txt in links:
         p = tf_l.add_paragraph()
         p.text = "• " + l_txt
-        p.font.size = Pt(9)
+        p.font.size = Pt(11)
         p.font.color.rgb = C_BOLD_BLACK
-        p.space_after = Pt(3)
+        p.space_after = Pt(4)
 
     add_footer(s6, 6)
 
