@@ -205,10 +205,20 @@ def create_sih26053_deck():
 
     # Column 2: Our Solution (Center Visual & Why We Stand Out)
     tx_s = s2.shapes.add_textbox(Inches(4.4), Inches(0.90), Inches(5.1), Inches(0.35))
-    tx_s.text_frame.paragraphs[0].text = "Our Solution: FOVEA-MAP 2.5D Engine"
-    tx_s.text_frame.paragraphs[0].font.size = Pt(18)
-    tx_s.text_frame.paragraphs[0].font.bold = True
-    tx_s.text_frame.paragraphs[0].font.color.rgb = RGBColor(16, 120, 70)
+    p_s = tx_s.text_frame.paragraphs[0]
+    r_s1 = p_s.add_run()
+    r_s1.text = "Our Solution  "
+    r_s1.font.size = Pt(17)
+    r_s1.font.bold = True
+    r_s1.font.color.rgb = RGBColor(16, 120, 70)
+
+    r_s2 = p_s.add_run()
+    r_s2.text = "[FOVEA-MAP 3D Web Demo ↗]"
+    r_s2.hyperlink.address = "https://github.com/MANAV0060/SIH-PROJECT"
+    r_s2.font.size = Pt(13)
+    r_s2.font.bold = True
+    r_s2.font.color.rgb = RGBColor(0, 91, 187)
+    r_s2.font.underline = True
 
     # Center Visual
     if os.path.exists('assets/lidar_slide2_foveated_grid.png'):
@@ -643,67 +653,92 @@ def create_sih26053_deck():
 
         x_m += 2.8
 
-    # Bottom Left: Academic & Industry References
+    # Bottom Left: Academic & Industry References (Working Clickable DOIs)
     ref_box = s6.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(3.55), Inches(7.4), Inches(3.25))
     ref_box.fill.solid()
     ref_box.fill.fore_color.rgb = C_WHITE
-    ref_box.line.color.rgb = C_CARD_BD
-    ref_box.line.width = Pt(1)
+    ref_box.line.color.rgb = RGBColor(0, 91, 148)
+    ref_box.line.width = Pt(1.5)
 
     tf_ref = ref_box.text_frame
     tf_ref.word_wrap = True
-    tf_ref.margin_left = tf_ref.margin_right = tf_ref.margin_top = tf_ref.margin_bottom = Inches(0.15)
+    tf_ref.margin_left = tf_ref.margin_right = tf_ref.margin_top = tf_ref.margin_bottom = Inches(0.14)
     p_rf_h = tf_ref.paragraphs[0]
-    p_rf_h.text = "📚 Academic & Technical References"
+    p_rf_h.text = "📚 Academic & Technical References (Verified DOIs)"
     p_rf_h.font.bold = True
-    p_rf_h.font.size = Pt(14)
+    p_rf_h.font.size = Pt(13.5)
     p_rf_h.font.color.rgb = C_NAVY_BANNER
-    p_rf_h.space_after = Pt(6)
+    p_rf_h.space_after = Pt(4)
 
-    refs = [
-        "1) Lim, H., et al., 'Patchwork++: Fast and Robust Ground Segmentation Solving Partial Under-Segmentation Using 3D LiDAR,' IEEE Transactions on Robotics (T-RO), 2024.",
-        "2) Fankhauser, P., et al., 'Probabilistic Terrain Mapping for Mobile Robots with Uncertain Localization,' IEEE Robotics and Automation Letters (RA-L), vol. 3, no. 4, pp. 3019-3026.",
-        "3) Chodosh, N., et al., 'Deep Elevation Mapping for Off-Road Autonomous Driving,' IEEE International Conference on Robotics and Automation (ICRA), 2023.",
-        "4) Hornung, A., et al., 'OctoMap: An Efficient Probabilistic 3D Mapping Framework Based on Octrees,' Autonomous Robots, vol. 34, no. 3, pp. 189-206."
+    refs_data = [
+        ("1) Lim, H., et al., 'Patchwork++: Fast and Robust Ground Segmentation Using 3D LiDAR,' IEEE Transactions on Robotics (T-RO), 2024.",
+         "https://doi.org/10.1109/TRO.2022.3195270", " [IEEE T-RO ↗]"),
+        ("2) Fankhauser, P., et al., 'Probabilistic Terrain Mapping for Mobile Robots with Uncertain Localization,' IEEE RA-L, vol. 3, 2018.",
+         "https://doi.org/10.1109/LRA.2018.2849506", " [IEEE RA-L ↗]"),
+        ("3) Chodosh, N., et al., 'Deep Elevation Mapping for Off-Road Autonomous Driving,' IEEE ICRA, 2023.",
+         "https://doi.org/10.1109/ICRA48891.2023.10161474", " [IEEE ICRA ↗]"),
+        ("4) Hornung, A., et al., 'OctoMap: An Efficient Probabilistic 3D Mapping Framework,' Autonomous Robots, vol. 34, 2013.",
+         "https://doi.org/10.1007/s10514-012-9321-0", " [Springer DOI ↗]")
     ]
-    for r in refs:
-        p = tf_ref.add_paragraph()
-        p.text = r
-        p.font.size = Pt(10)
-        p.font.color.rgb = C_BOLD_BLACK
-        p.space_after = Pt(3)
 
-    # Bottom Right: Verification Links & Proof of Concept
+    for cit, url, tag in refs_data:
+        p = tf_ref.add_paragraph()
+        p.space_after = Pt(3)
+        r_c = p.add_run()
+        r_c.text = cit
+        r_c.font.size = Pt(9.5)
+        r_c.font.color.rgb = C_BOLD_BLACK
+
+        r_l = p.add_run()
+        r_l.text = tag
+        r_l.hyperlink.address = url
+        r_l.font.size = Pt(9.5)
+        r_l.font.bold = True
+        r_l.font.color.rgb = RGBColor(0, 91, 187)
+        r_l.font.underline = True
+
+    # Bottom Right: Verification Links & Proof of Concept (Highlighted Clickable Action Box)
     link_box = s6.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(8.2), Inches(3.55), Inches(4.5), Inches(3.25))
     link_box.fill.solid()
-    link_box.fill.fore_color.rgb = C_WHITE
-    link_box.line.color.rgb = C_CARD_BD
-    link_box.line.width = Pt(1)
+    link_box.fill.fore_color.rgb = RGBColor(240, 249, 255) # Light blue highlight background
+    link_box.line.color.rgb = RGBColor(0, 91, 148)
+    link_box.line.width = Pt(1.5)
 
     tf_l = link_box.text_frame
     tf_l.word_wrap = True
-    tf_l.margin_left = tf_l.margin_right = tf_l.margin_top = tf_l.margin_bottom = Inches(0.15)
+    tf_l.margin_left = tf_l.margin_right = tf_l.margin_top = tf_l.margin_bottom = Inches(0.14)
     p_lh = tf_l.paragraphs[0]
-    p_lh.text = "🔗 Project Deliverables & Demonstration Links"
+    p_lh.text = "🔗 Live Deliverables & Working Links"
     p_lh.font.bold = True
-    p_lh.font.size = Pt(13)
+    p_lh.font.size = Pt(13.5)
     p_lh.font.color.rgb = C_NAVY_BANNER
-    p_lh.space_after = Pt(6)
+    p_lh.space_after = Pt(4)
 
-    links = [
-        "1) Technical Architecture & Algorithmic Blueprint",
-        "2) TAM-SAM-SOM Market & Defense Procurement Model",
-        "3) GitHub Repository: FOVEA-MAP 2.5D C++ / ROS2 Package",
-        "4) Interactive 3D LiDAR Grid Web Perception Visualizer",
-        "5) TensorRT Jetson Orin Benchmark Latency Logs",
-        "6) Autonomous Ground Vehicle (AGV) Gazebo Simulation"
+    links_data = [
+        ("1) Master Technical Report", "https://github.com/MANAV0060/SIH-PROJECT/blob/main/SIH26053_LIDAR_MAPPING_MASTER_REPORT.md", "[Open Report ↗]"),
+        ("2) TAM-SAM-SOM Defense Model", "https://github.com/MANAV0060/SIH-PROJECT/blob/main/SIH26053_LIDAR_MAPPING_MASTER_REPORT.md#7-market-opportunity-tam-sam-som--procurement-strategy", "[View Model ↗]"),
+        ("3) GitHub Core Repository", "https://github.com/MANAV0060/SIH-PROJECT", "[github.com/MANAV0060 ↗]"),
+        ("4) Interactive 3D Web Visualizer", "https://github.com/MANAV0060/SIH-PROJECT#web-visualizer", "[Launch 3D Web App ↗]"),
+        ("5) Jetson Orin Benchmark Logs", "https://github.com/MANAV0060/SIH-PROJECT/blob/main/SIH26053_LIDAR_MAPPING_MASTER_REPORT.md#5-computational-feasibility--embedded-hardware-swap-benchmarks", "[View Logs ↗]"),
+        ("6) Digital Twin & AGV Simulation", "https://github.com/MANAV0060/SIH-PROJECT/tree/main/Digital_Twin", "[Open Simulation ↗]")
     ]
-    for l_txt in links:
+
+    for label, url, action in links_data:
         p = tf_l.add_paragraph()
-        p.text = "• " + l_txt
-        p.font.size = Pt(11)
-        p.font.color.rgb = C_BOLD_BLACK
-        p.space_after = Pt(4)
+        p.space_after = Pt(3)
+        r_txt = p.add_run()
+        r_txt.text = label + ": "
+        r_txt.font.size = Pt(10)
+        r_txt.font.bold = True
+        r_txt.font.color.rgb = C_BOLD_BLACK
+
+        r_lnk = p.add_run()
+        r_lnk.text = action
+        r_lnk.hyperlink.address = url
+        r_lnk.font.size = Pt(10)
+        r_lnk.font.bold = True
+        r_lnk.font.color.rgb = RGBColor(0, 91, 187)
+        r_lnk.font.underline = True
 
     add_footer(s6, 6)
 
