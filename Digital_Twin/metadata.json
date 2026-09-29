@@ -1,0 +1,6 @@
+{
+  "name": "AeroTwin Propulsion Lab",
+  "description": "Defense-grade digital twin HUD for UAV propulsion monitoring, predictive prognostics, Monte Carlo contingency simulation, and CBM+ fleet logistics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

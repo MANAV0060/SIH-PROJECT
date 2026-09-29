@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+**/node_modules/
+.pnp
+.pnp.js
+
+# Production build outputs
+dist/
+**/dist/
+build/
+
+# Environment files & secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python cache & virtual environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Scratch & temporary test artifacts
+WhatsApp Image*
+preview_im*
+crop_2022.png
+test_*
+pdf_pages/
+slide_exports/
+report.txt
+report2.txt
+redesigned_pptx_dump.txt
+*.log
+
+# Temporary slide extraction / preview caches
+extracted_*
+page0_*
+pdf_*_preview.png
+right_side_preview.png
+text_part.png
+v3.pptx
+1788201969158.pdf
+
+# OS & Editor generated files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
