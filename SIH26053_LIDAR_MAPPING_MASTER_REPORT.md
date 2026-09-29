@@ -102,13 +102,13 @@ Where:
 Based on the official SIH template format shown in your reference slides:
 
 ### 📑 Slide 1: Title Slide (Official SIH 2026 Layout)
-- **Top Bar**: Mindsmiths / Team Logo (Left), `SMART INDIA HACKATHON 2026` (Center), Official SIH Bulb Logo (Right).
+- **Top Bar**: Team Nullpoint / Logo (Left), `SMART INDIA HACKATHON 2026` (Center), Official SIH Bulb Logo (Right).
 - **Main Heading**: **Adaptive Variable Resolution 2.5D Lidar Mapping for Dynamic Environment Perception**
 - **Problem Statement ID**: **SIH26053**
 - **Theme**: **Smart Vehicles**
 - **PS Category**: **Software**
 - **Organization**: **Defence Research and Development Organisation (DRDO)**
-- **Team Name**: **Team Mindsmiths**
+- **Team Name**: **Team Nullpoint**
 
 ---
 

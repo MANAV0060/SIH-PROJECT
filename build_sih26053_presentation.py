@@ -89,7 +89,7 @@ def create_sih26053_deck():
     tx_team = s1.shapes.add_textbox(Inches(0.8), Inches(0.30), Inches(3.0), Inches(0.55))
     tf_team = tx_team.text_frame
     p_team = tf_team.paragraphs[0]
-    p_team.text = "Team Mindsmiths"
+    p_team.text = "Team Nullpoint"
     p_team.font.size = Pt(20)
     p_team.font.bold = True
     p_team.font.color.rgb = C_NAVY_BANNER
@@ -133,7 +133,7 @@ def create_sih26053_deck():
         ("Ministry / Organization –", "Defence Research and Development Organisation (DRDO)"),
         ("Theme –", "Smart Vehicles"),
         ("PS Category –", "Software Edition"),
-        ("Team Name (Registered on portal) –", "Mindsmiths"),
+        ("Team Name (Registered on portal) –", "Nullpoint"),
         ("Target System –", "Autonomous Ground Vehicles (AGVs) & Tactical Unmanned Rovers")
     ]
 
@@ -150,7 +150,7 @@ def create_sih26053_deck():
         run_v.text = val
         run_v.font.bold = False
         run_v.font.size = Pt(15.5)
-        run_v.font.color.rgb = C_NAVY_BANNER if "SIH26053" in val or "Mindsmiths" in val or "DRDO" in val else C_BOLD_BLACK
+        run_v.font.color.rgb = C_NAVY_BANNER if "SIH26053" in val or "Nullpoint" in val or "DRDO" in val else C_BOLD_BLACK
 
     # Right Side Graphic (Official SIH Bulb Logo)
     bulb_img = 'assets/sih_bulb_hd_clean.png' if os.path.exists('assets/sih_bulb_hd_clean.png') else 'sih_bulb_hd.png'
