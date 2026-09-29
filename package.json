@@ -1,0 +1,11 @@
+{
+  "name": "aeris-twin-sih2026",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AERIS-TWIN 3.0 AI-Enabled Digital Twin System for Tactical MALE UAV Propulsion",
+  "scripts": {
+    "dev": "npm run dev --prefix Digital_Twin",
+    "build": "npm run build --prefix Digital_Twin",
+    "preview": "npm run preview --prefix Digital_Twin"
+  }
+}

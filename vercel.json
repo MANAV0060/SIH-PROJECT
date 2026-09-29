@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "cd Digital_Twin && npm install",
+  "buildCommand": "cd Digital_Twin && npm run build",
+  "outputDirectory": "Digital_Twin/dist",
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/home-robot.html",
+      "destination": "/home-robot.html"
+    },
+    {
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

@@ -4,6 +4,7 @@
 [![Domain: Defence & Aerospace](https://img.shields.io/badge/Domain-Defence%20%26%20Aerospace-blue.svg?style=for-the-badge)]()
 [![Target: Tactical MALE UAVs](https://img.shields.io/badge/Target-Tactical%20MALE%20UAVs-red.svg?style=for-the-badge)]()
 [![Stack: React 19 + TypeScript + Vite](https://img.shields.io/badge/Stack-React%2019%20%7C%20Vite%20%7C%20Tailwind-61dafb.svg?style=for-the-badge)]()
+[![Deploy: Vercel Ready](https://img.shields.io/badge/Vercel-Ready-black?style=for-the-badge&logo=vercel)](https://vercel.com)
 
 > **Real-Time Physics-Informed Digital Twin System for Health Monitoring, Fault Prediction, and Mission Reliability Enhancement of Aero-Piston Engines used in Tactical MALE UAVs.**
 
@@ -127,6 +128,31 @@ You can also directly open `home-robot.html` in any web browser without needing 
 # Open in default browser (Windows)
 start home-robot.html
 ```
+
+---
+
+## 🌐 Deploy to Vercel (Zero-Config)
+
+This repository includes pre-configured [`vercel.json`](file:///d:/sih%20ppt/vercel.json) configurations for instant, zero-config deployment on [Vercel](https://vercel.com):
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FMANAV0060%2FSIH-PROJECT)
+
+### Method A: Connect via Vercel Dashboard (Recommended)
+1. Go to [vercel.com/new](https://vercel.com/new) and log in with your GitHub account.
+2. Select and import **`MANAV0060/SIH-PROJECT`**.
+3. **Leave all build settings as default** — the repository includes root `vercel.json` and `package.json` that automatically handle building the `Digital_Twin` frontend.
+4. Click **Deploy**. Vercel will build the React app and deploy it on a fast, global edge network with custom SSL.
+
+### Method B: Deploy using Vercel CLI
+```bash
+# Install Vercel CLI globally
+npm i -g vercel
+
+# Deploy directly from repository root
+vercel --prod
+```
+
+Both the React Defense Cockpit (root `/`) and the high-fidelity landing page (`/home-robot.html`) are automatically routed and served.
 
 ---
 
